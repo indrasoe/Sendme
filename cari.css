@@ -1,0 +1,195 @@
+/* Reset CSS untuk menjaga keseragaman */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Menambahkan font 'Caveat' ke seluruh halaman */
+@import url('https://fonts.googleapis.com/css2?family=Caveat&display=swap');
+
+body {
+    font-family: 'Caveat', cursive; /* Mengganti font dengan 'Caveat' */
+    background-color: white; /* Latar belakang putih */
+    color: #333; /* Teks berwarna abu gelap */
+    line-height: 1.6;
+}
+
+header {
+    background-color: black; /* Header berwarna hitam */
+    padding: 20px;
+    text-align: center;
+}
+
+.header-text {
+    color: white; /* Teks header putih */
+    font-size: 36px;
+    font-weight: 700;
+    letter-spacing: 2px; /* Memberikan ruang antar huruf */
+    text-transform: uppercase; /* Mengubah teks menjadi huruf kapital */
+    font-family: 'Caveat', cursive; /* Font estetik dengan cursive */
+}
+
+main {
+    padding: 40px;
+    text-align: center;
+}
+
+/* Gaya untuk form */
+.form {
+    margin-block-start: 30px;
+    text-align: start;
+    max-inline-size: 500px;
+    margin-inline-start: auto;
+    margin-inline-end: auto;
+    font-family: 'Caveat', cursive; /* Font Caveat untuk form */
+}
+
+/* Styling untuk input dan button */
+textarea, input[type="text"] {
+    inline-size: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-block-end: 20px;
+    font-family: 'Caveat', cursive; /* Font Caveat untuk input dan textarea */
+}
+
+textarea {
+    resize: vertical;
+}
+
+input[type="text"] {
+    block-size: 40px;
+}
+
+/* Tombol pencarian */
+button[type="submit"] {
+    padding: 15px 30px;
+    background-color: black;
+    color: white;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    font-family: 'Caveat', cursive; /* Font Caveat pada tombol submit */
+}
+
+button[type="submit"]:hover {
+    background-color: #3f3e3a;
+    transform: scale(1.05);
+}
+
+/* Styling untuk tombol kembali ke halaman utama */
+a.button.kotak {
+    display: inline-block;
+    padding: 20px 40px;
+    background-color: transparent;
+    color: black;
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 15px;
+    border: 2px solid black;
+    border-radius: 0px; /* Tidak ada pembulatan, tombol kotak */
+    transition: all 0.3s ease;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Efek bayangan lembut */
+}
+
+/* Efek hover untuk tombol kotak */
+a.button.kotak:hover {
+    background-color: #3f3e3a; /* Ganti warna latar belakang saat hover */
+    color: white;
+    transform: scale(1.05); /* Efek memperbesar tombol */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); /* Menambah bayangan saat hover */
+}
+
+.result {
+    margin-block-start: 20px;
+}
+
+.message-box {
+    background-color: #f9f9f9;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.message-preview {
+    color: #555;
+}
+
+.show-message {
+    display: inline-block;
+    padding: 5px 10px;
+    background-color: #000;
+    color: white;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    margin-block-start: 10px;
+}
+
+.full-message {
+    margin-block-start: 10px;
+    padding: 10px;
+    background-color: #f1f1f1;
+    border-radius: 5px;
+    display: none;
+}
+
+/* Styling kotak pesan */
+.message-box {
+    background-color: #ffffff;
+    border: 2px solid #000;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 5px 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.message-box:hover {
+    transform: scale(1.03);
+    background-color: #f3f3f3;
+}
+
+.message-preview {
+    display: inline;
+}
+
+.show-message {
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: #000;
+    color: #fff;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    margin-block-start: 10px;
+    font-weight: bold;
+}
+
+.full-message {
+    margin-block-start: 10px;
+    padding: 10px;
+    background-color: #f1f1f1;
+    border-radius: 5px;
+    display: none; /* Defaultnya disembunyikan */
+}
+
+/* Tambahkan CSS ini untuk mengatur teks agar tidak keluar dari kotak */
+.message-box, .full-message {
+    overflow-wrap: break-word; /* Membungkus kata panjang ke baris berikutnya */
+    word-wrap: break-word; /* Untuk kompatibilitas lebih luas */
+    white-space: pre-wrap; /* Menghormati spasi dan membuat teks tetap dalam kotak */
+}
+
+.full-message.show {
+    max-block-size: 1%; /* Sesuaikan ini dengan tinggi maksimal yang diinginkan */
+    opacity: 1;
+}

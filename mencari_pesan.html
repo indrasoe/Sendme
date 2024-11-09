@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mencari Pesan</title>
+    <link rel="stylesheet" href="cari.css">
+</head>
+<body>
+    <header>
+        <h1 class="header-text">Mencari Pesan</h1>
+    </header>
+    <main>
+        <form id="searchMessageForm" class="form">
+            <label for="search" class="label">Cari Pesan Berdasarkan Nama Penerima:</label>
+            <input type="text" id="search" name="search" placeholder="Masukkan nama penerima" required>
+            <button type="submit" class="button kotak">Cari</button>
+        </form>
+
+        <div id="messagesList" class="result">
+            <h3>Hasil Pencarian:</h3>
+            <!-- Pesan yang sesuai dengan pencarian akan ditampilkan di sini -->
+        </div>
+
+        <a href="menulis_pesan.html" class="button kotak">Kirim Pesan Baru</a>
+    </main>
+
+    <script>
+        // Fungsi untuk menampilkan pesan
+        function displayMessages(messages) {
+            const messagesList = document.getElementById("messagesList");
+
+            // Hapus pesan lama
+            messagesList.innerHTML = "<h3>Hasil Pencarian:</h3>";
+
+            if (messages.length === 0) {
+                messagesList.innerHTML += "<p>Tidak ada pesan yang sesuai.</p>";
+                return;
+            }
+
+            // Menampilkan pesan yang cocok
+            messages.forEach(message => {
+                const messageElement = document.createElement("div");
+                messageElement.classList.add("message-box");
+
+                // Kotak pesan dengan preview
+                messageElement.innerHTML = `
+                    <strong>Kepada: </strong>${message.to}<br>
+                    <strong>Pesan: </strong>
+                    <span class="message-preview">${message.message.slice(0, 50)}...</span>
+                    <div class="full-message" style="display: none;">
+                        ${message.message}
+                    </div>
+                    <button class="show-message">Lihat Pesan</button>
+                `;
+
+                // Event untuk tombol Lihat Pesan
+                const showButton = messageElement.querySelector(".show-message");
+                showButton.addEventListener("click", function() {
+                    const fullMessage = messageElement.querySelector(".full-message");
+                    const previewMessage = messageElement.querySelector(".message-preview");
+
+                    // Toggle tampilan pesan lengkap dan pesan singkat
+                    if (fullMessage.style.display === "none") {
+                        fullMessage.style.display = "block";
+                        previewMessage.style.display = "none";
+                        showButton.textContent = "Sembunyikan Pesan";
+                    } else {
+                        fullMessage.style.display = "none";
+                        previewMessage.style.display = "inline";
+                        showButton.textContent = "Lihat Pesan";
+                    }
+                });
+
+                messagesList.appendChild(messageElement);
+            });
+        }
+
+        // Pencarian pesan berdasarkan nama penerima
+        document.getElementById("searchMessageForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            const searchTerm = document.getElementById("search").value.toLowerCase();
+            const messages = JSON.parse(localStorage.getItem("messages")) || [];
+            const filteredMessages = messages.filter(message => 
+                message.to.toLowerCase().includes(searchTerm)
+            );
+            displayMessages(filteredMessages);
+        });
+
+        // Menampilkan semua pesan yang ada
+        const messages = JSON.parse(localStorage.getItem("messages")) || [];
+        displayMessages(messages);
+    </script>
+</body>
+</html>

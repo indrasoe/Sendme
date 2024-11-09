@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menulis Pesan</title>
+    <link rel="stylesheet" href="form.css">
+</head>
+<body>
+    <header>
+        <h1 class="header-text">Menulis Pesan</h1>
+    </header>
+    <main>
+        <form id="sendMessageForm" class="form" method="POST" action="send_email.php">
+            <label for="to" class="label">Kepada:</label>
+            <input type="text" id="to" name="to" placeholder="Nama Penerima" required>
+            
+            <label for="message" class="label">Pesan:</label>
+            <textarea id="message" name="message" placeholder="Masukkan pesan Anda" required></textarea>
+            
+            <label for="email" class="label">Email Penerima (Opsional):</label>
+            <input type="email" id="email" name="email" placeholder="Masukkan email jika ingin dikirim melalui email">
+
+            <button type="submit" class="button kotak">Kirim Pesan</button>
+        </form>
+    </main>
+    <script>
+        // Menangani pengiriman pesan
+        document.getElementById("sendMessageForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Mencegah form dikirim untuk memproses data menggunakan JavaScript
+
+            const to = document.getElementById("to").value;
+            const message = document.getElementById("message").value;
+            const email = document.getElementById("email").value;
+
+            // Menyimpan pesan dalam LocalStorage
+            let messages = JSON.parse(localStorage.getItem("messages")) || [];
+            messages.push({ to: to, message: message, email: email });
+            localStorage.setItem("messages", JSON.stringify(messages));
+
+            // Jika email diisi, pesan dikirim via email
+            if (email) {
+                // Kirimkan pesan via email menggunakan PHP
+                fetch("send_email.php", {
+                    method: "POST",
+                    body: new URLSearchParams({
+                        to: to,
+                        message: message,
+                        email: email
+                    })
+                }).then(response => response.text()).then(data => {
+                    // Menampilkan notifikasi email dikirim
+                    showNotification("Pesan berhasil dikirim melalui email!", "success");
+                }).catch(error => {
+                    showNotification("Gagal mengirim email.", "error");
+                });
+            } else {
+                // Menampilkan notifikasi jika tidak ada email
+                showNotification("Pesan berhasil disimpan!", "success");
+            }
+        });
+
+        // Fungsi untuk menampilkan notifikasi
+        function showNotification(message, type) {
+            const notificationBox = document.createElement("div");
+            notificationBox.classList.add("notification", type);
+
+            notificationBox.textContent = message;
+
+            document.body.appendChild(notificationBox);
+
+            // Menampilkan efek dan menutup notifikasi setelah 4 detik
+            setTimeout(() => {
+                notificationBox.classList.add("show"); // Menampilkan notifikasi
+                setTimeout(() => {
+                    notificationBox.remove(); // Menghapus notifikasi setelah tampil
+                }, 3000); // Menghapus setelah 3 detik
+            }, 100);
+        }
+    </script>
+</body>
+</html>
