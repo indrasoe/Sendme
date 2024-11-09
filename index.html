@@ -17,10 +17,41 @@
             <a href="menulis_pesan.html" class="button kotak">Menulis Pesan</a>
             <a href="mencari_pesan.html" class="button kotak">Mencari Pesan</a>
         </section>
+
+        <section>
+            <h2>Pesan Terkirim:</h2>
+            <div id="messages"></div>
+            <input type="text" id="messageInput" placeholder="Tulis pesan di sini..." />
+            <button onclick="sendMessage()">Kirim Pesan</button>
+        </section>
+
         <div class="menu">
-
-
+            <!-- Menu atau bagian tambahan lainnya bisa ditambahkan di sini -->
         </div>
     </main>
+
+    <script>
+        // Membuat koneksi WebSocket ke server
+        const socket = new WebSocket('ws://localhost:8080'); // Menghubungkan ke WebSocket server di localhost
+
+        // Ketika pesan diterima dari server, menampilkannya di halaman
+        socket.onmessage = function(event) {
+            const messageContainer = document.getElementById('messages');
+            const messageElement = document.createElement('div');
+            messageElement.textContent = event.data; // Menampilkan pesan yang diterima
+            messageContainer.appendChild(messageElement);
+        };
+
+        // Fungsi untuk mengirim pesan ke server
+        function sendMessage() {
+            const messageInput = document.getElementById('messageInput');
+            const message = messageInput.value;
+
+            if (message.trim()) {
+                socket.send(message); // Mengirim pesan ke server
+                messageInput.value = ''; // Mengosongkan input setelah pesan dikirim
+            }
+        }
+    </script>
 </body>
 </html>
