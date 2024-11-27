@@ -18,4 +18,7 @@ document.getElementById("sendMessageForm").addEventListener("submit", function(e
         document.getElementById("sendMessageForm").reset();
     })
     .catch(error => console.error("Terjadi kesalahan:", error));
+    ws.send(JSON.stringify({ action: 'addMessage', to, messageContent, email }));
+console.log('Data sent to server:', { action: 'addMessage', to, messageContent, email }); // Tambahkan log ini
+
 });
