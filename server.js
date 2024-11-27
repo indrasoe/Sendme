@@ -128,4 +128,22 @@ function loadMessages() {
 // Panggil fungsi untuk memuat pesan saat halaman dibuka
 window.onload = loadMessages;
 
+    ws.on('message', (message) => {
+    console.log('Message received from client:', message); // Tambahkan log ini
+    const request = JSON.parse(message);
+
+    if (request.action === 'addMessage') {
+        // Simpan pesan ke database
+        console.log('Saving message:', request); // Tambahkan log ini
+        saveMessage(request.to, request.messageContent, request.email, (err, id) => {
+            if (err) {
+                ws.send(JSON.stringify({ status: 'error', message: 'Failed to save message' }));
+            } else {
+                ws.send(JSON.stringify({ status: 'success', message: 'Message saved', id }));
+            }
+        });
+    }
+});
+
+
 });
